@@ -2,37 +2,11 @@
   (:use quil.core
         sketch-book.util))
 
-(def palette [(hex-to-rgb "#e0e0e0")
-              (hex-to-rgb "#B6B081")
-              (hex-to-rgb "#CAA13C")
-              (hex-to-rgb "#AB5008")
-              (hex-to-rgb "#2E524E")])
-
-(def palette [(hex-to-rgb "#1E172D")
-              (hex-to-rgb "#F83163")
-              (hex-to-rgb "#01EADE")
-              (hex-to-rgb "#FBC02D")])
+(def palette [(hex-to-rgb "#b7c3f3")
+              (hex-to-rgb "#cf1259")])
 
 (def WIDTH 800)
 (def HEIGHT 800)
-
-
-
-(def params {:a 1.4
-             :b -2.3
-             :c 2.4
-             :d -2.1})
-
-(def params {:a 1.641
-             :b 1.902
-             :c 0.316
-             :d 1.525})
-
-(def params {:a -2.7
-             :b -0.09
-             :c -0.86
-             :d -2.2})
-
 
 (def px (atom 0.0))
 (def py (atom 0.0))
@@ -71,8 +45,8 @@
     c))
 
 (defn setup []
-    (background 0)
-    (smooth))
+  (apply background (nth palette 0))
+  (smooth))
 
 (def params-1 {:a 1.641
                :b 1.902
@@ -89,29 +63,21 @@
                :c 1.659
                :d -0.943})
 
-(def params-4 {:a -0.709
-               :b 1.638
-               :c -0.452
-               :d 1.740})
-
 (defn draw []
   (smooth)
-  (frame-rate 400)
-  ; (apply stroke (nth palette 2))
+  (frame-rate 100)
+  (apply stroke (nth palette 1))
   (let [[dx dy] (de-jong-ifs [@px @py] params-1)
         x (remap dx -2 2 0 WIDTH)
         y (remap dy -2 2 0 HEIGHT)]
-      (println (inc-pixel x y))
-      (stroke (* 20 (:count (pixel x y))))
-      (point x y)
-      (reset! px dx)
-      (reset! py dy)))
-
+    (println (inc-pixel x y))
+    (stroke (* 20 (:count (pixel x y))))
+    (point x y)
+    (reset! px dx)
+    (reset! py dy)))
 
 (defn savef []
     (save (str "/Users/curtis/code/sketch/output/de-jong-" (frame-count) ".png")))
-
-
 
 (defsketch de-jong
     :title "De Jong Iterative Function System"
