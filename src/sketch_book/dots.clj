@@ -24,10 +24,13 @@
                (cycle [true false])))
 
 (defn draw-dots []
-  (frame-rate 10)
-  (apply background (first palette))
+  (frame-rate 1)
+  (apply background (nth palette 2))
+  (println  "Begin draw-dots")
   (doseq [row (drop-last 3 dots)]
+    (println "  Outer loop")
     (doseq [[x y c odd] row]
+      (println "    Inner loop")
       (apply fill (concat c [200]))
       (let [max-r 35
             odd-r (* max-r (abs (sin (radians (* 18 (mod (frame-count) 20))))))
